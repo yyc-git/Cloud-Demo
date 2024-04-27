@@ -10,13 +10,97 @@
 
 * TODO add WSPK
 
-** TODO pass run test
+** DONE pass run test
 
 ** TODO pass tf.js node.js backend simple example by use nvdia(hand writing?)
 
 ** TODO benchmark test
 
+
 ** TODO change to tf.js node.js backend
+
+before:
+[1240, 980]: 200ms
+
+after:
+
+
+** TODO write article
+
+
+
+UNIMPLEMENTED: DNN library is not found
+https://github.com/tensorflow/models/issues/10590
+
+** TODO move here
+
+
+** TODO how to get .npy from .pt?
+
+** TODO work with RTX Path Tracer
+
+
+** TODO future : improve perf
+
+- use multi gpu to inference
+
+- use TensorRT(but now tf.js not support!)
+
+
+
+
+
+* TODO add camera move
+
+
+* TODO add animation(transform animation)
+
+TODO add a button to control play/stop animation
+
+* TODO optimize RTX Path Tracer
+
+** TODO update is too slow
+
+
+* TODO integrate with Meta3D
+
+
+* TODO build cloud demo
+
+refer to:
+WebRTC 云游戏
+
+** TODO show cloud render result in PC
+
+** TODO can move camera
+
+** TODO can play animation
+
+** TODO show cloud render result in mobile
+
+** TODO rewrite 3dwarehouse->warehouse1 by cloud
+
+
+
+
+
+
+
+
+* TODO add NRC
+
+** TODO implement with CPU AI
+
+** TODO AI3D implement linear on GPU
+
+TODO build BP by code run on compute shader instead of use any neural lib!
+
+TODO integrate AI3D with Meta3D
+
+
+* TODO add WSPK
+
+** TODO AI3D implement conv on GPU
 
 
 ** TODO generate input(.png) for train and inference
@@ -29,33 +113,43 @@
 
 
 
-** TODO move here
-
-
-** TODO work with RTX Path Tracer
+# * TODO use BMFR
 
 
 
-* TODO use Meta3D to unify
+
+# TODO future improve:
+# [Weighted À-Trous Linear Regression (WALR) for Real-Time Diffuse Indirect Lighting Denoising](https://gpuopen.com/download/publications/GPUOpen2022_WALR.pdf)
 
 
-* TODO optimize RTX Path Tracer
-
-** TODO update is too slow
 
 
-** TODO add camera move
 
 
-** TODO add animation(transform animation)
 
 
-* TODO build cloud demo
 
-** TODO show cloud render result in PC
 
-** TODO can move camera
 
-** TODO show cloud render result in mobile
+# * TODO optimize RTX Path Tracer
 
-** TODO rewrite 3dwarehouse->warehouse1 by cloud
+# ** TODO update is too slow
+
+
+
+# ** TODO wspk
+
+
+# *** TODO generate input(.png) for train and inference
+
+#     motion vector .png should preprocess data:
+#     1./ 10
+#     2.to [0,1]  
+
+
+
+* TODO future : improve Vulkan nvdia driver version supported by webgpu-node
+
+** TODO use tf.js node.js gpu backend
+
+** TODO use DLSS, WSPK, ...
