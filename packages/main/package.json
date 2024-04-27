@@ -1,0 +1,21 @@
+{
+    "name": "main",
+    "version": "0.0.1",
+    "description": "",
+    "homepage": "",
+    "license": "MIT",
+    "main": "",
+    "scripts": {
+        "watch": "bsb -clean-world -make-world -w",
+        "build": "bsb -clean-world -make-world",
+        "runTest": "node src/index.js"
+    },
+    "devDependencies": {},
+    "dependencies": {
+        "@cwasm/jpeg-turbo": "^0.1.3",
+        "@cwasm/lodepng": "^0.1.4",
+        "atob": "^2.1.2",
+        "cross-blob": "^2.0.0",
+        "wonder-webgpu": "0.0.1"
+    }
+}

@@ -1,0 +1,22 @@
+{
+	"name": "cloud-demo",
+	"private": true,
+	"license": "",
+	"author": "Meta3D",
+	"scripts": {
+		"clean": "lerna clean",
+		"bootstrap": "lerna bootstrap"
+	},
+	"workspaces": [
+		"packages/*"
+	],
+	"config": {
+		"commitizen": {
+			"path": "node_modules/cz-customizable"
+		}
+	},
+	"devDependencies": {
+		"lerna": "^4.0.0"
+	},
+	"resolutions": {}
+}

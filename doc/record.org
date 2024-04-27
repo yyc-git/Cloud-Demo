@@ -1,0 +1,61 @@
+* DONE add RTX Path Tracer
+
+** DONE pass run test
+
+
+** DONE rent 4090 gpu server, pass run test(with old vulkan driven)
+
+
+** DONE move here
+
+* TODO add WSPK
+
+** TODO pass run test
+
+** TODO pass tf.js node.js backend simple example by use nvdia(hand writing?)
+
+** TODO benchmark test
+
+** TODO change to tf.js node.js backend
+
+
+** TODO generate input(.png) for train and inference
+
+    motion vector .png should preprocess data:
+    1./ 10
+    2.to [0,1]  
+
+
+
+
+
+** TODO move here
+
+
+** TODO work with RTX Path Tracer
+
+
+
+* TODO use Meta3D to unify
+
+
+* TODO optimize RTX Path Tracer
+
+** TODO update is too slow
+
+
+** TODO add camera move
+
+
+** TODO add animation(transform animation)
+
+
+* TODO build cloud demo
+
+** TODO show cloud render result in PC
+
+** TODO can move camera
+
+** TODO show cloud render result in mobile
+
+** TODO rewrite 3dwarehouse->warehouse1 by cloud
