@@ -1,4 +1,5 @@
 
+var path = require("path");
 
 var perf_hooks = require("perf_hooks");
 
@@ -1522,7 +1523,14 @@ let _setAllDp = (scene) => {
         },
         loadGLSL: (function (srcPath) {
             // return _loadShaderFile("./node_modules/wonder.js/" + srcPath);
-            return _loadShaderFile("../wonder.js/" + srcPath);
+            // return _loadShaderFile("../wonder.js/" + srcPath);
+
+
+
+            // console.log(__dirname);
+            // return _loadShaderFile(process.cwd() + "/../wonder.js/" + srcPath);
+            return _loadShaderFile(path.join(__dirname, "../../wonder.js/" , srcPath)  );
+            // return _loadShaderFile(path.resolve("../wonder.js/" , srcPath));
         }),
         capacity: {
             // getTextureArrayLayerSize: (function (param) {
@@ -1921,7 +1929,6 @@ async function _main() {
     // let [camera, scene] = _buildScene2();
     // let [camera, scene] = _buildScene3();
     let [camera, scene] = await _loadGLTFModel();
-
     _checkNormalScale(scene);
 
     scene = _convertSceneAllGeometries(scene);
@@ -1939,6 +1946,7 @@ async function _main() {
     scene.updateMatrixWorld();
 
 
+
     await init();
 
 
@@ -1947,21 +1955,26 @@ async function _main() {
     // let n00 = performance.now()
     // console.log(n00-n0);
 
-    // while (true) {
-    //     await render();
-
-    //     // console.log("render");
-    // }
-
-
-
-
-    let n1 = performance.now()
-    // await update();
+    while (true) {
+        let n1 = performance.now()
+        // await update();
         await render();
-    let n2 = performance.now()
+        let n2 = performance.now()
 
-    console.log(n2-n1);
+        console.log(n2 - n1);
+
+        // console.log("render");
+    }
+
+
+
+
+    // let n1 = performance.now()
+    // // await update();
+    //     await render();
+    // let n2 = performance.now()
+
+    // console.log(n2-n1);
 }
 
 _log("begin main");

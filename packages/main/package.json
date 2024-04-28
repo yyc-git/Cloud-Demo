@@ -8,6 +8,7 @@
     "scripts": {
         "watch": "bsb -clean-world -make-world -w",
         "build": "bsb -clean-world -make-world",
+        "pkg": "pkg .",
         "runTest": "node src/index.js"
     },
     "devDependencies": {},
@@ -17,5 +18,16 @@
         "atob": "^2.1.2",
         "cross-blob": "^2.0.0",
         "wonder-webgpu": "0.0.1"
+    },
+    "bin": "src/index.js",
+    "pkg": {
+        "assets": [
+            "./asset/**/*",
+            "../wonder.js/**/*",
+            "../../node_modules/wonder-webgpu/**/*"
+        ],
+        "targets":[
+            "node18-win-x64"
+        ]
     }
 }
