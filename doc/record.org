@@ -50,6 +50,47 @@ https://github.com/tensorflow/models/issues/10590
 
 
 
+
+
+
+* TODO build cloud demo
+
+refer to:
+WebRTC 云游戏
+
+** TODO show cloud render result in PC
+
+*** TODO add WebRTC + Node.js demo
+
+*** TODO add cloud render demo
+
+
+*** TODO improve
+
+**** TODO WebTransport
+
+**** TODO WebCodecs
+
+**** TODO update cloud render
+
+
+
+** TODO can move camera
+
+** TODO can play animation
+
+** TODO show cloud render result in mobile
+
+** TODO rewrite 3dwarehouse->warehouse1 by cloud
+
+
+* TODO use current cloud render to test
+
+** TODO package as exe
+
+
+
+
 * TODO add camera move
 
 
@@ -62,29 +103,12 @@ TODO add a button to control play/stop animation
 ** TODO update is too slow
 
 
+* TODO update cloud
+
+
 * TODO integrate with Meta3D
 
-
-* TODO build cloud demo
-
-refer to:
-WebRTC 云游戏
-
-** TODO show cloud render result in PC
-
-** TODO can move camera
-
-** TODO can play animation
-
-** TODO show cloud render result in mobile
-
-** TODO rewrite 3dwarehouse->warehouse1 by cloud
-
-
-
-
-
-
+* TODO update cloud
 
 
 * TODO add NRC
@@ -97,6 +121,7 @@ TODO build BP by code run on compute shader instead of use any neural lib!
 
 TODO integrate AI3D with Meta3D
 
+* TODO update cloud
 
 * TODO add WSPK
 
@@ -110,6 +135,7 @@ TODO integrate AI3D with Meta3D
     2.to [0,1]  
 
 
+* TODO update cloud
 
 
 
