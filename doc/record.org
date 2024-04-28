@@ -123,6 +123,15 @@ TODO integrate AI3D with Meta3D
 
 * TODO update cloud
 
+
+* TODO add ReSTIR
+
+
+
+* TODO add BMFR to test effect
+
+
+
 * TODO add WSPK
 
 ** TODO AI3D implement conv on GPU
