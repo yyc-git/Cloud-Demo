@@ -1938,8 +1938,14 @@ async function _main() {
 
     _setAllDp(scene);
 
+    let width = globalThis.width
+    let height = globalThis.height
+
+    console.log(width, height);
     // prepare([640, 480], 30);
-    prepare([1240, 980], 30);
+    // prepare([1240, 980], 30);
+    // prepare([width, height], 30);
+    prepare([1097, 480], 30);
 
 
     camera.updateMatrixWorld();

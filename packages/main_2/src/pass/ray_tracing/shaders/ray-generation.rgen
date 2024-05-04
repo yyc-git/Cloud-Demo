@@ -1,0 +1,173 @@
+#version 460
+#extension GL_EXT_ray_tracing : require
+#extension GL_EXT_nonuniform_qualifier : enable
+#extension GL_EXT_scalar_block_layout : enable
+#pragma shader_stage(raygen)
+
+#include "../../shaders/camera.glsl"
+#include "../../shaders/common_data.glsl"
+#include "define.glsl"
+#include "reduce_noise_data.glsl"
+#include "shading_data.glsl"
+
+#include "raycommon.glsl"
+
+#include "light.glsl"
+#include "pbr_compute.glsl"
+#include "random.glsl"
+
+#include "disney.glsl"
+#include "disney_utils.glsl"
+
+#include "indirect_utils.glsl"
+
+#include "../../shaders/sample_utils.glsl"
+
+layout(location = 1) rayPayloadEXT bool isShadowed;
+
+#include "shadow_ray.glsl"
+
+#include "ggx_direct.glsl"
+
+layout(location = 0) rayPayloadEXT hitPayload prd;
+
+#include "indirect_ray.glsl"
+
+#include "ggx_indirect.glsl"
+
+layout(binding = 0) uniform sampler sampler0;
+layout(binding = 1) uniform texture2D gPositionRoughnessTexture;
+layout(binding = 2) uniform texture2D gNormalMetalnessTexture;
+layout(binding = 3) uniform texture2D gDiffusePositionWTexture;
+layout(binding = 4) uniform texture2D gMotionVectorDepthSpecularTexture;
+
+layout(set = 1, binding = 0) uniform accelerationStructureEXT topLevelAS;
+layout(std140, set = 1, binding = 1) buffer PixelBuffer { vec4 pixels[]; }
+pixelBuffer;
+
+layout(std140, set = 1, binding = 2) uniform CommonData { vec4 compressedData; }
+pushC;
+
+layout(std140, set = 1, binding = 3) uniform RayTracingCommonData {
+  vec4 compressedData;
+}
+rayTracingCommonData;
+
+vec2 getLanuchIndex(uvec3 launchID, uvec3 launchSize) {
+  const vec2 pixelCenter = vec2(launchID.xy) + vec2(0.5);
+  const vec2 inUV = pixelCenter / vec2(launchSize.xy);
+
+  // // return inUV * 2.0 - 1.0;
+  return inUV;
+}
+
+bool isNotBackground(vec4 worldPosition) { return worldPosition.w == 0.0; }
+
+void main() {
+  vec4 commonDataCompressedData = pushC.compressedData;
+  uint frame = getFrame(commonDataCompressedData);
+  uint lightCount = getLightCount(commonDataCompressedData);
+  // bool doIndirectGI = getDoIndirectGI(commonDataCompressedData);
+  // bool doIndirectGI = false;
+
+  const uint bounceCount = 2;
+  const bool doIndirectGI = true;
+  const float tMin = 0.1;
+
+  uint seed =
+      tea(gl_LaunchIDEXT.y * gl_LaunchSizeEXT.x + gl_LaunchIDEXT.x, frame);
+
+  prd.seed = seed;
+
+  vec2 lanuchIndex = getLanuchIndex(gl_LaunchIDEXT, gl_LaunchSizeEXT);
+
+  vec4 positionRoughness =
+      texture(sampler2D(gPositionRoughnessTexture, sampler0), lanuchIndex);
+  vec4 diffusePositionW =
+      texture(sampler2D(gDiffusePositionWTexture, sampler0), lanuchIndex);
+  vec4 normalMetalness =
+      texture(sampler2D(gNormalMetalnessTexture, sampler0), lanuchIndex);
+  vec4 motionVectorDepthSpecular = texture(
+      sampler2D(gMotionVectorDepthSpecularTexture, sampler0), lanuchIndex);
+
+  vec4 worldPosition = vec4(positionRoughness.xyz, diffusePositionW.a);
+  vec3 worldNormal = normalMetalness.xyz;
+  vec3 materialDiffuse = diffusePositionW.rgb;
+  // vec3 materialSpecularColor = vec3(0.5, 0.0, 0.5);
+  float materialMetalness = normalMetalness.w;
+  float materialRoughness = positionRoughness.w;
+  float materialSpecular = motionVectorDepthSpecular.w;
+
+  ShadingData shading = buildShadingData(materialDiffuse, materialMetalness,
+                                         materialRoughness, materialSpecular);
+
+  vec3 hitValue = vec3(0.0);
+
+  if (isNotBackground(worldPosition)) {
+    vec3 V = computeV(uCamera.cameraPosition.xyz, worldPosition.xyz);
+
+    hitValue += computeDirectLight(seed, 0, tMin, lightCount, worldPosition.xyz,
+                                   worldNormal, V, shading, topLevelAS);
+
+    // if(luminance(hitValue) >= maxValue ){
+
+    //         hitValue = vec3(clamp(hitValue.x, 0.0, maxValue),
+    //                              clamp(hitValue.y, 0.0, maxValue),
+    //                              clamp(hitValue.z, 0.0, maxValue));
+    // }
+
+    prd.worldPosition = worldPosition.xyz;
+    prd.worldNormal = worldNormal;
+
+    prd.shading = shading;
+
+    prd.V = V;
+
+    if (doIndirectGI) {
+      float roughnessBias = 0.0;
+
+      for (uint bb = 0; bb < bounceCount; bb++) {
+        ShadingData shadingForEachBounce = prd.shading;
+
+        // Increase Roughness Per Bounce for reduce fireflies:
+        // https://twitter.com/YuriyODonnell/status/1199253959086612480
+        // http://cg.ivd.kit.edu/publications/p2013/PSR_Kaplanyan_2013/PSR_Kaplanyan_2013.pdf
+        // http://jcgt.org/published/0007/04/01/paper.pdf
+        float oldRoughness = shadingForEachBounce.roughness;
+        shadingForEachBounce.roughness = min(1.0, oldRoughness + roughnessBias);
+        roughnessBias += oldRoughness * 0.75f;
+
+        // TODO fix when use normal map:
+        //  Use the same normal for the normal-mapped and non-normal mapped
+        // vectors... This means we could get light
+        //     leaks at secondary surfaces with normal maps due to indirect rays
+        //     going below the surface.  This isn't a huge issue, but this is a
+        //     (TODO: fix)
+        vec3 indirectLight = computeIndirectLight(
+            seed, tMin, prd.V, prd.worldPosition, prd.worldNormal,
+            shadingForEachBounce, topLevelAS);
+
+        // if(luminance(indirectLight) <= maxValue ){
+
+        //         hitValue += indirectLight;
+
+        // }
+
+        // const vec3 indirectLightClampMaxValue = vec3(18.0);
+
+        // indirectLight =
+        //     clamp(indirectLight, vec3(0.0), indirectLightClampMaxValue);
+
+        hitValue += indirectLight;
+      }
+    }
+  } else {
+    // TODO refactor: add miss color to common data buffer?
+    hitValue = vec3(0.15);
+  }
+
+  const uint pixelIndex =
+      gl_LaunchIDEXT.y * gl_LaunchSizeEXT.x + gl_LaunchIDEXT.x;
+
+  pixelBuffer.pixels[pixelIndex] = vec4(hitValue, 1.0);
+}

@@ -20,7 +20,7 @@ function exec(param) {
                     var __x = WebGPUCoreRunAPI$Wonderjs.load(Curry._1(WebGPUCoreDpRunAPI$Wonderjs.unsafeGet(undefined).window.make, {
                               width: param[0],
                               height: param[1],
-                              title: "Cloud Picture",
+                              title: "",
                               resizable: false
                             }));
                     return Most.map((function (param) {

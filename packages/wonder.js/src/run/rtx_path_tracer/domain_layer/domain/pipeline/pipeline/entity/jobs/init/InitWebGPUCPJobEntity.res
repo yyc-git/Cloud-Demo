@@ -6,8 +6,11 @@ let exec = () => PictureCPDoService.getSize()->OptionSt.get->Result.mapSuccess((
     WebGPUCoreDpRunAPI.unsafeGet().window.make({
       "width": width,
       "height": height,
-      "title": "Cloud Picture",
+      // "title": "Cloud Picture",
+      "title": "",
+      // "title": Js.Nullable.null-> Obj.magic,
       "resizable": false,
+      // "resizable": true,
     })
     ->WebGPUCoreRunAPI.load
     ->WonderBsMost.Most.map(((window, adapter, device, context, queue, swapChainFormat)) => {

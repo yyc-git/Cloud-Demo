@@ -98,6 +98,14 @@ WebRTC 云游戏
 
 TODO add a button to control play/stop animation
 
+
+
+
+* TODO add BMFR to test effect
+
+
+
+
 * TODO optimize RTX Path Tracer
 
 ** TODO update is too slow
@@ -126,9 +134,6 @@ TODO integrate AI3D with Meta3D
 
 * TODO add ReSTIR
 
-
-
-* TODO add BMFR to test effect
 
 
 
