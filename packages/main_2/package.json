@@ -10,6 +10,7 @@
         "watch": "bsb -clean-world -make-world -w",
         "test:watch": "jest --watch --config jest.json",
         "build": "bsb -clean-world -make-world",
+        "pkg": "pkg .",
         "runTest": "node lib/js/src/RTXMain.js"
     },
     "devDependencies": {
@@ -20,5 +21,15 @@
         "bs-platform": "^7.2.2",
         "clang-format": "^1.4.0",
         "wonder-bs-most": "^0.0.3"
+    },
+    "bin": "lib/js/src/RTXMain.js",
+    "pkg": {
+        "assets": [
+            "./src/**/*",
+            "../../node_modules/webgpu/**/*"
+        ],
+        "targets":[
+            "node18-win-x64"
+        ]
     }
 }

@@ -133,6 +133,7 @@ let _initFrameData =
     |> addStaticBindGroupDataFunc(1, otherBindGroup);
 
   let baseShaderPath = "src/pass/taa/shaders";
+  let baseShaderPath =ShaderUtils.buildPath(.baseShaderPath)
 
   let vertexShaderModule =
     device

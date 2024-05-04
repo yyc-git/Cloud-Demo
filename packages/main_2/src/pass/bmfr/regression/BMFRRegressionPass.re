@@ -183,6 +183,7 @@ let init = (device, state) => {
     |> Pass.RegressionPass.addStaticBindGroupData(1, otherBindGroup);
 
   let baseShaderPath = "src/pass/bmfr/regression/shaders";
+  let baseShaderPath =ShaderUtils.buildPath(.baseShaderPath)
 
   let computeShaderModule =
     device

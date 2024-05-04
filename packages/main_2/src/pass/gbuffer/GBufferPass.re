@@ -156,6 +156,7 @@ let _createRenderTargetData = (device, window, format) => {
   );
 };
 
+
 let init = (device, window, state) => {
   let modelBindGroupLayout =
     device
@@ -377,6 +378,7 @@ let init = (device, window, state) => {
     |> Pass.GBufferPass.setIndexCountMap(indexCountMap);
 
   let baseShaderPath = "src/pass/gbuffer/shaders";
+  let baseShaderPath =ShaderUtils.buildPath(.baseShaderPath)
 
   let vertexShaderModule =
     device

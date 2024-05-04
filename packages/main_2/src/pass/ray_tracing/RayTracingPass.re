@@ -7,6 +7,7 @@ open Js.Typed_array;
 open StateType;
 
 let _createShaderBindingTable = (baseShaderPath, device) => {
+  let baseShaderPath =ShaderUtils.buildPath(.baseShaderPath)
   let rayGenShaderModule =
     device
     |> Device.createShaderModule({

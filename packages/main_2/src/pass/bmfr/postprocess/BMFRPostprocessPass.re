@@ -198,6 +198,7 @@ let init = (device, swapChainFormat, state) => {
     |> Pass.PostprocessPass.addStaticBindGroupData(1, otherBindGroup);
 
   let baseShaderPath = "src/pass/bmfr/postprocess/shaders";
+  let baseShaderPath =ShaderUtils.buildPath(.baseShaderPath)
 
   let vertexShaderModule =
     device

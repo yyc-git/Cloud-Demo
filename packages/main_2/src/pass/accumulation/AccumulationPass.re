@@ -91,6 +91,7 @@ let init = (device, swapChainFormat, state) => {
     state |> Pass.AccumulationPass.setStaticBindGroupData(0, bindGroup);
 
   let baseShaderPath = "src/pass/accumulation/shaders";
+  let baseShaderPath =ShaderUtils.buildPath(.baseShaderPath)
 
   let vertexShaderModule =
     device
