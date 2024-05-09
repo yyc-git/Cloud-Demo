@@ -84,7 +84,7 @@ WebRTC 云游戏
 ** TODO rewrite 3dwarehouse->warehouse1 by cloud
 
 
-* TODO use current cloud render to test
+* DONE use current cloud render to test
 
 ** TODO package as exe
 
@@ -99,9 +99,6 @@ WebRTC 云游戏
 TODO add a button to control play/stop animation
 
 
-
-
-* TODO add BMFR to test effect
 
 
 
@@ -119,6 +116,14 @@ TODO add a button to control play/stop animation
 * TODO update cloud
 
 
+* TODO rewrite 3dwarehouse->warehouse1 by cloud
+
+
+
+
+
+
+
 * TODO add NRC
 
 ** TODO implement with CPU AI
@@ -133,6 +138,9 @@ TODO integrate AI3D with Meta3D
 
 
 * TODO add ReSTIR
+
+
+* TODO add BMFR to test effect
 
 
 
